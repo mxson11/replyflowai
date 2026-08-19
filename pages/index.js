@@ -1,15 +1,38 @@
+import { useState } from 'react';
+
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+
+  async function startCheckout() {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/create-checkout-session', { method: 'POST' });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Something went wrong starting checkout: ' + (data.error || 'unknown error'));
+        setLoading(false);
+      }
+    } catch (e) {
+      alert('Could not reach checkout: ' + e.message);
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <nav>
         <div className="wrap nav-inner">
-          <div className="brand"><div className="brand-mark">R</div><div className="brand-name">ReplyFlow AI</div></div>
+          <div className="brand"><div className="brand-mark">R</div><div className="brand-name">ReplyFlow</div></div>
           <div className="nav-links">
             <a href="#how">How it works</a>
             <a href="#pricing">Pricing</a>
             <a href="#industries">Who it&apos;s for</a>
           </div>
-          <a className="nav-cta" href="#pricing">Start free trial</a>
+          <button onClick={startCheckout} disabled={loading} className="nav-cta" style={{ border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1 }}>
+            {loading ? 'Loading…' : 'Start free trial'}
+          </button>
         </div>
       </nav>
 
@@ -19,7 +42,9 @@ export default function Home() {
           <h1>Never lose a customer to a <span>missed call</span> again.</h1>
           <p>When someone calls and you can&apos;t pick up, ReplyFlow texts them back instantly, answers their questions, and books the job — automatically.</p>
           <div className="hero-ctas">
-            <a className="btn-primary" href="#pricing">Start your 14-day free trial</a>
+            <button onClick={startCheckout} disabled={loading} className="btn-primary" style={{ border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1 }}>
+              {loading ? 'Loading…' : 'Start your 14-day free trial'}
+            </button>
             <a className="btn-ghost" href="/demo">See how it works</a>
           </div>
           <div className="hero-note">$29/mo · no setup fee · cancel anytime</div>
@@ -74,7 +99,9 @@ export default function Home() {
             <li>Full lead dashboard</li>
             <li>Cancel anytime</li>
           </ul>
-          <a className="btn-primary" href="mailto:hello@replyflow.app?subject=Starting my ReplyFlow trial">Start free trial</a>
+          <button onClick={startCheckout} disabled={loading} className="btn-primary" style={{ width: '100%', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1 }}>
+            {loading ? 'Loading…' : 'Start free trial'}
+          </button>
         </div>
       </div>
 
@@ -82,13 +109,15 @@ export default function Home() {
         <div className="cta-band">
           <h2>Stop losing jobs to voicemail.</h2>
           <p>Set up takes one phone call. Most businesses are live the same day.</p>
-          <a className="btn-primary" href="#pricing">Start your free trial</a>
+          <button onClick={startCheckout} disabled={loading} className="btn-primary" style={{ border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1 }}>
+            {loading ? 'Loading…' : 'Start your free trial'}
+          </button>
         </div>
       </div>
 
       <footer>
         <div className="wrap foot-inner">
-          <div>© 2026 ReplyFlow AI</div>
+          <div>© 2026 ReplyFlow</div>
           <div className="foot-links">
             <a href="/privacy">Privacy</a>
             <a href="/terms">Terms</a>
