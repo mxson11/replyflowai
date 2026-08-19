@@ -16,6 +16,7 @@ export default function AdminPage() {
   });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
     const saved = typeof window !== 'undefined' && localStorage.getItem('rf_admin_pw');
@@ -31,13 +32,22 @@ export default function AdminPage() {
   }, [authed]);
 
   async function loadBusinesses() {
-    const res = await fetch('/api/businesses', { headers: { 'x-admin-password': password } });
-    if (res.ok) {
-      const data = await res.json();
-      setBusinesses(data.businesses || []);
-    } else {
-      setAuthed(false);
-      localStorage.removeItem('rf_admin_pw');
+    try {
+      const res = await fetch('/api/businesses', { headers: { 'x-admin-password': password } });
+      if (res.ok) {
+        const data = await res.json();
+        setBusinesses(data.businesses || []);
+        setLoginError('');
+      } else if (res.status === 401) {
+        setAuthed(false);
+        localStorage.removeItem('rf_admin_pw');
+        setLoginError('Wrong admin password.');
+      } else {
+        const err = await res.json().catch(() => ({}));
+        setLoginError('Server error: ' + (err.error || res.status) + ' — check your Supabase env variables in Vercel.');
+      }
+    } catch (e) {
+      setLoginError('Could not reach the server: ' + e.message);
     }
   }
 
@@ -85,6 +95,7 @@ export default function AdminPage() {
           >
             Enter
           </button>
+          {loginError && <p style={{ color: '#FF5C5C', fontSize: 13, marginTop: 14 }}>{loginError}</p>}
         </div>
       </div>
     );
