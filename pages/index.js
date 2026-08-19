@@ -1,15 +1,9 @@
-import Head from 'next/head';
-
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>ReplyFlow</title>
-      </Head>
-
       <nav>
         <div className="wrap nav-inner">
-          <div className="brand"><div className="brand-mark">R</div><div className="brand-name">ReplyFlow</div></div>
+          <div className="brand"><div className="brand-mark">R</div><div className="brand-name">ReplyFlow AI</div></div>
           <div className="nav-links">
             <a href="#how">How it works</a>
             <a href="#pricing">Pricing</a>
@@ -26,7 +20,7 @@ export default function Home() {
           <p>When someone calls and you can&apos;t pick up, ReplyFlow texts them back instantly, answers their questions, and books the job — automatically.</p>
           <div className="hero-ctas">
             <a className="btn-primary" href="#pricing">Start your 14-day free trial</a>
-            <a className="btn-ghost" href="#how">See how it works</a>
+            <a className="btn-ghost" href="/demo">See how it works</a>
           </div>
           <div className="hero-note">$29/mo · no setup fee · cancel anytime</div>
         </div>
@@ -80,7 +74,7 @@ export default function Home() {
             <li>Full lead dashboard</li>
             <li>Cancel anytime</li>
           </ul>
-          <a className="btn-primary" href="#">Start free trial</a>
+          <a className="btn-primary" href="mailto:hello@replyflow.app?subject=Starting my ReplyFlow trial">Start free trial</a>
         </div>
       </div>
 
@@ -94,11 +88,11 @@ export default function Home() {
 
       <footer>
         <div className="wrap foot-inner">
-          <div>© 2026 ReplyFlow</div>
+          <div>© 2026 ReplyFlow AI</div>
           <div className="foot-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Contact</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="mailto:hello@replyflow.app">Contact</a>
           </div>
         </div>
       </footer>
