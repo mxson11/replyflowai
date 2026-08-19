@@ -1,9 +1,15 @@
+import Head from 'next/head';
+
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>ReplyFlow</title>
+      </Head>
+
       <nav>
         <div className="wrap nav-inner">
-          <div className="brand"><div className="brand-mark">R</div><div className="brand-name">ReplyFlow AI</div></div>
+          <div className="brand"><div className="brand-mark">R</div><div className="brand-name">ReplyFlow</div></div>
           <div className="nav-links">
             <a href="#how">How it works</a>
             <a href="#pricing">Pricing</a>
@@ -88,7 +94,7 @@ export default function Home() {
 
       <footer>
         <div className="wrap foot-inner">
-          <div>© 2026 ReplyFlow AI</div>
+          <div>© 2026 ReplyFlow</div>
           <div className="foot-links">
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
