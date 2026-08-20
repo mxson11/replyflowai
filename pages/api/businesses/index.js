@@ -1,5 +1,10 @@
+import { randomBytes } from 'crypto';
 import { supabaseAdmin } from '../../../lib/supabase';
 import { requireAdmin } from '../../../lib/adminAuth';
+
+function generateAccessCode() {
+  return randomBytes(6).toString('hex'); // e.g. "a1b2c3d4e5f6"
+}
 
 export default async function handler(req, res) {
   if (!requireAdmin(req, res)) return;
@@ -22,7 +27,7 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabaseAdmin
       .from('businesses')
-      .insert({ name, twilio_number, forwarding_number, services, service_area, hours, faqs })
+      .insert({ name, twilio_number, forwarding_number, services, service_area, hours, faqs, access_code: generateAccessCode() })
       .select()
       .single();
 
